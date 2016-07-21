@@ -4300,8 +4300,11 @@ func TestContext2Apply_vars(t *testing.T) {
 
 func TestContext2Apply_varsEnv(t *testing.T) {
 	// Set the env var
-	old := tempEnv(t, "TF_VAR_ami", "baz")
-	defer os.Setenv("TF_VAR_ami", old)
+	old_ami := tempEnv(t, "TF_VAR_ami", "baz")
+	old_list := tempEnv(t, "TF_VAR_list", `["Hello", "World"]`)
+
+	defer os.Setenv("TF_VAR_ami", old_ami)
+	defer os.Setenv("TF_VAR_list", old_list)
 
 	m := testModule(t, "apply-vars-env")
 	p := testProvider("aws")
